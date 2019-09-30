@@ -1,11 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { Header } from './components/index';
 
 class App extends Component {
+
+    static propTypes = {
+        children: PropTypes.any.isRequired
+    };
+
     static path = '/';
 
     render() {
         return (
-            <h1>Hello World!</h1>
+            <div>
+                <Header />
+                { this.props.children }
+            </div>
         );
     }
 }
