@@ -1,0 +1,47 @@
+import React, { PropTypes } from 'react';
+import classnames from 'classnames';
+
+export default class Input extends React.Component {
+
+    static path = '/';
+
+    static propTypes = {
+        value: PropTypes.string.isRequired,
+        onChange: PropTypes.func.isRequired,
+        divClasses: PropTypes.string.isRequired,
+        error: PropTypes.string.isRequired
+    };
+
+    constructor(props) {
+        super(props);
+
+        const { value } = this.props;
+        this.state = { value };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        const { value } = event.target;
+        this.props.onChange(value);
+        this.setState({ value });
+    }
+
+    render() {
+        const divClasses = classnames({
+            'form-group': true,
+            'has-error': this.props.error ? true : false
+        });
+        return (
+            <div className={ divClasses }>
+                <input
+                    type='text'
+                    value={ this.state.value }
+                    onChange={ this.handleChange.bind(this) }
+                />
+                { this.props.error ? <span className='help-block'>{ this.props.error }</span> : null }
+            </div>
+        );
+    }
+
+}
