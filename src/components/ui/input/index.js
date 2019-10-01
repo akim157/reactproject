@@ -3,8 +3,6 @@ import classnames from 'classnames';
 
 export default class Input extends React.Component {
 
-    static path = '/';
-
     static propTypes = {
         value: PropTypes.string.isRequired,
         onChange: PropTypes.func.isRequired,
@@ -32,12 +30,14 @@ export default class Input extends React.Component {
             'form-group': true,
             'has-error': this.props.error ? true : false
         });
+        const { value } = this.props;
         return (
             <div className={ divClasses }>
                 <input
                     type='text'
-                    value={ this.state.value }
+                    value={ value }
                     onChange={ this.handleChange.bind(this) }
+                    className='form-control'
                 />
                 { this.props.error ? <span className='help-block'>{ this.props.error }</span> : null }
             </div>
