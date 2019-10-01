@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Input from '../../components/ui/input/index';
 import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
-import { addTodo } from './actions';
+import { addTodo, likeTodo } from './actions';
 import './styles.less';
 
 class HomePage extends React.Component {
@@ -48,8 +48,16 @@ class HomePage extends React.Component {
 
     renderTodos(item, idx) {
         return (
-            <li key={idx}>{ item }</li>
+            <li key={idx}>
+                <span className='b-home-todo'>{ item }</span>
+                <button className='btn'><i className="glyphicon glyphicon-remove" /></button>
+                <button className='btn' onClick={ this.likeTodo.bind(this, item)}><i className="glyphicon glyphicon-heart" /></button>
+            </li>
         );
+    }
+
+    likeTodo(todo) {
+        this.props.dispatch( likeTodo(todo));
     }
 
     render() {
@@ -68,7 +76,7 @@ class HomePage extends React.Component {
                             onChange={ this.inputOnChange }
                             error={ error }
                         />
-                        <button className='btn btn-primary' onClick={ this.addTodo }>Add</button>
+                        <button className='btn btn-primary b-home-submit' onClick={ this.addTodo }>Add</button>
                     </div>
                 </div>
             </div>

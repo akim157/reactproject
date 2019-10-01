@@ -1,4 +1,4 @@
-import { ADD_TODO } from './actions';
+import { ADD_TODO, LIKE_TODO } from './actions';
 
 const initialState = {
     todos: [
@@ -21,6 +21,8 @@ function homeReducer(state = initialState, action) {
                 error: action.error,
                 todos
             });
+        case LIKE_TODO:
+
         default:
             return state;
     }
