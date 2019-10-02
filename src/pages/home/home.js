@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react';
 import Input from '../../components/ui/input/index';
 import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
-import { addTodo, likeTodo } from './actions';
+import { addTodo, likeTodo, deleteTodo } from './actions';
+import classnames from 'classnames';
 import './styles.less';
 
 class HomePage extends React.Component {
@@ -46,12 +47,22 @@ class HomePage extends React.Component {
         this.setState({ todoName: '' });
     }
 
+    deleteTodo(todo) {
+        this.props.dispatch(deleteTodo(todo));
+    }
+
     renderTodos(item, idx) {
+        const todoClasses = classnames('b-home-todo', {
+            'is-liked': item.liked
+        });
+        const btnClasses = classnames('btn', {
+            'active': item.liked
+        });
         return (
             <li key={idx}>
-                <span className='b-home-todo'>{ item }</span>
-                <button className='btn'><i className="glyphicon glyphicon-remove" /></button>
-                <button className='btn' onClick={ this.likeTodo.bind(this, item)}><i className="glyphicon glyphicon-heart" /></button>
+                <span className={ todoClasses }>{ item }</span>
+                <button className='btn' onClick={ this.deleteTodo.bind(this, item) }><i className="glyphicon glyphicon-remove" /></button>
+                <button className={ btnClasses } onClick={ this.likeTodo.bind(this, item)}><i className="glyphicon glyphicon-heart" /></button>
             </li>
         );
     }
