@@ -4,6 +4,7 @@ import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
 import { addTodo, likeTodo, deleteTodo } from './actions';
 import classnames from 'classnames';
+import { LocalStorageManager } from '../../utils/index';
 import './styles.less';
 
 class HomePage extends React.Component {
@@ -92,6 +93,10 @@ class HomePage extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    componentWillUnmount() {
+        LocalStorageManager.set('todos', this.props.home.todos);
     }
 
 }
