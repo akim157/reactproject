@@ -1,12 +1,12 @@
-import { ADD_TODO, LIKE_TODO, DELETE_TODO } from './actions';
+import { ADD_TODO, LIKE_TODO, DELETE_TODO, GET_TODOS } from './actions';
 
 const initialState = {
-    todos: [
+   /* todos: [
         {
             id: 1,
             name: 'Todo 1'
         }
-    ],
+    ],*/
     error: ''
 };
 
@@ -27,7 +27,11 @@ function homeReducer(state = initialState, action) {
             return Object.assign({}, state, { todos: state.todos });
         case DELETE_TODO:
             const todos_delete = state.todos.filter(todo => todo.id !== action.todo.id);
-            return Object.assing({}, state, { todos: todos_delete });
+						return Object.assing({}, state, { todos: todos_delete });
+				case GET_TODOS:
+					return Object.assign({}, state, {
+						todos: action.todos
+					});
         default:
             return state;
     }
