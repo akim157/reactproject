@@ -3,12 +3,11 @@ import Input from '../../components/ui/input/index';
 import Loader from '../../components/ui/loader/index';
 import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
-import { 
-	addTodo, 
-	likeTodo, 
-	deleteTodo, 
-	getTodos,
-	saveTodos 
+import {
+	addTodo,
+	likeTodo,
+	deleteTodo,
+	getTodos
 } from './actions';
 import classnames from 'classnames';
 import { LocalStorageManager } from '../../utils/index';
@@ -25,14 +24,11 @@ class HomePage extends React.Component {
         super(props);
         this.state = {
             todoName: ''
-        }
+        };
 
         bindAll(this, ['renderTodos', 'inputOnChange', 'addTodo']);
-		}
-		
-		componentWillMount() {			
-			this.props.dispatch( getTodos() );
-		}
+        this.props.dispatch( getTodos() );
+    }
 
     inputOnChange(value) {
         this.setState({ todoName: value });
@@ -52,10 +48,7 @@ class HomePage extends React.Component {
         // this.setState({ todos });
         // this.setState({ todoName: '', error: '' });
 
-        const { todos } = this.props.home;
-        const id = todos[this.state.todos.length - 1].id + 1;
-        const name = this.state.todoName;
-        this.props.dispatch(addTodo(id, name));
+        this.props.dispatch(addTodo(this.props.home.todos, this.state.todoName));
         this.setState({ todoName: '' });
     }
 
@@ -85,16 +78,17 @@ class HomePage extends React.Component {
 
     render() {
         const { todoName } = this.state;
-				const { todos, error } = this.props.home;
+				const { todos, error, isLoading } = this.props.home;
 				LocalStorageManager.set('todos', todos);
         return (
             <div className='row-fluid b-home'>
                 <div className='col-xs-12'>
                     <ul>
-                        { 
-													todos.length === 0 ? <Loader /> :
-													todos.map(this.renderTodos) 
-												}
+                        {
+                            // todos.length === 0 ? <Loader /> :
+                            // todos.map(this.renderTodos)
+                        }
+                        { isLoading ? <Loader/> : todos.length !== 0 ? todos.map(this.renderTodos) : 'Элементво нет' }
                     </ul>
                     <div className='col-xs-4'>
                         {/*<input type='text' className='form-control' value={ todoName } onChange={ this.inputOnChange.bind(this)}/>*/}

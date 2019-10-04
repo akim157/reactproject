@@ -1,13 +1,9 @@
 import { ADD_TODO, LIKE_TODO, DELETE_TODO, GET_TODOS } from './actions';
 
 const initialState = {
-   /* todos: [
-        {
-            id: 1,
-            name: 'Todo 1'
-        }
-    ],*/
-    error: ''
+    todos: [],
+    error: '',
+    isLoading: true
 };
 
 function homeReducer(state = initialState, action) {
@@ -30,7 +26,8 @@ function homeReducer(state = initialState, action) {
 						return Object.assing({}, state, { todos: todos_delete });
 				case GET_TODOS:
 					return Object.assign({}, state, {
-						todos: action.todos
+						todos: action.todos,
+                        isLoading: false
 					});
         default:
             return state;
