@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
-import { closeModal } from '../../components/modal/index';
-import Input from '../../components/ui/input/index';
+import { closeModal } from '../../../components/modal/index';
+import Input from '../../../components/ui/input/index';
 
 class EditModal extends React.Component {
 	static propTypes = {
@@ -17,7 +17,11 @@ class EditModal extends React.Component {
 		this.state = {
 			name: this.props.name,
 			youtube: this.props.youtube,
-			id: this.props.id
+			id: this.props.id,
+			errors: {
+				name: '',
+				youtube: ''
+			}
 		};
 		bindAll(this, ['close','changeName','changeLink']);
 	}
@@ -32,6 +36,23 @@ class EditModal extends React.Component {
 	}
 	save() {
 		const { id, name, youtube } = this.state;
+		const errorTitle = 'Поле не должно быть пустым';
+		const errors = {
+			name: '',
+			youtube: ''
+		};
+		if (name === '') {
+			errors.name = errorTitle;
+		}
+		if (youtube === '') {
+			errors.youtube = errorTitle;
+		}
+
+		this.setState({ errors });
+		
+		if (errors.name || errors.youtube) {			
+			return;
+		}
 		this.props.dispatch( this.props.onSave({ id, name, youtube }) );
 		this.close();
 	}
@@ -40,8 +61,8 @@ class EditModal extends React.Component {
 			<div>
 				<div className='modal-body'>
 					<p><b>ID:</b>{ this.state.id }</p>	
-					<Input onChange={ this.changeName } value={ this.state.name } />
-					<Input onChange={ this.changeLink } value={ this.state.youtube } />
+					<Input onChange={ this.changeName } value={ this.state.name } error={this.state.errors.name}/>
+					<Input onChange={ this.changeLink } value={ this.state.youtube } error={this.state.errors.youtube}/>
 				</div>
 				<div className='modal-footer'>
 					<button className='btn-btn-default' onClick={ this.close }>Закрыть</button>
