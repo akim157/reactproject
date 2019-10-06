@@ -16,7 +16,7 @@ class Modal extends React.Component {
 		this.props.dispatch( closeModal() );
 	}
 	render() {
-		const { isOpen, title, btnText, content } = this.props.modal;
+		const { isOpen, title, content } = this.props.modal;
 		if (!isOpen) return null;
 		return (
 			<div className='modal fade in' tabindex='-1' role='dialog'>
@@ -28,13 +28,7 @@ class Modal extends React.Component {
 								<span aria-hidden='true'>&times;</span>
 							</button>							
 						</div>
-						<div className='modal-body'>
-							<p>{ content }</p>
-						</div>
-						<div className='modal-footer'>
-							<button type='button' className='btn btn-secondary' data-dismiss='modal' onClick={ this.close }>Close</button>
-							<button type='button' className='btn btn-primary'>{ btnText }</button>
-						</div>
+						{ content }												
 					</div>
 				</div>
 			</div>
