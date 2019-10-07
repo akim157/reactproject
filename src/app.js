@@ -17,6 +17,7 @@ class App extends Component {
 								<Modal />
                 <Header />
                 { this.props.children }
+                { NODE_ENV !== 'production' ? <DevTools /> : null }
             </div>
         );
     }

@@ -88,7 +88,7 @@ class HomePage extends React.Component {
                             // todos.length === 0 ? <Loader /> :
                             // todos.map(this.renderTodos)
                         }
-                        { isLoading ? <Loader/> : todos.length !== 0 ? todos.map(this.renderTodos) : 'Элементво нет' }
+                        { isLoading ? <Loader/> : todos.length ? todos.map(this.renderTodos) : 'Элементво нет' }
                     </ul>
                     <div className='col-xs-4'>
                         {/*<input type='text' className='form-control' value={ todoName } onChange={ this.inputOnChange.bind(this)}/>*/}
